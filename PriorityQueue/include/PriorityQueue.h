@@ -3,7 +3,7 @@
 #include <iostream>
 #include <list>
 #include <exception>
-#include<iterator>
+#include <iterator>
 
 template<typename T>
 struct MyComparator {
@@ -14,31 +14,39 @@ struct MyComparator {
 
 template<typename T>
 class PriorityQueue {
-   
+
 public:
+	// Destructor
 	~PriorityQueue();
-	void push(const T& t); 
+
+	// Push an element into the queue
+	void push(const T& t);
+
+	// Remove and return the front element from the queue
 	T poll();
 
 private:
-	std::list<T> queue;
+	std::list<T> queue;  // The underlying container for the queue
 };
 
 
 template<typename T>
 PriorityQueue<T>::~PriorityQueue()
 {
-	queue.clear();
+	queue.clear();  
 }
 
 template<typename T>
 void PriorityQueue<T>::push(const T& t)
 {
-	MyComparator<T> comperator;
+	MyComparator<T> comparator;
 	typename std::list<T>::iterator it = queue.begin();
-	while (it != queue.end() && comperator(*it, t) < 0) {
+
+	// Find the correct position to insert the new element while maintaining the sorted order
+	while (it != queue.end() && comparator(*it, t) < 0) {
 		++it;
 	}
+
 	queue.insert(it, t);
 }
 
@@ -46,10 +54,9 @@ template<typename T>
 T PriorityQueue<T>::poll()
 {
 	if (queue.empty())
-		throw std::exception("PriorityQueue empty !");
+		throw std::exception("PriorityQueue empty!");
+
 	T frontElement = queue.front();
 	queue.pop_front();
 	return frontElement;
 }
-
-
