@@ -23,7 +23,7 @@ public:
 	void push(const T& t);
 
 	// Remove and return the front element from the queue
-	T poll();
+	T _poll();
 
 private:
 	std::list<T> queue;  // The underlying container for the queue
